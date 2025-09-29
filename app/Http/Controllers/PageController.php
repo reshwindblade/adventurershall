@@ -14,8 +14,24 @@ class PageController extends Controller
     {
         $homePage = Page::where('slug', 'home')->published()->first();
         
+        // Get recent news articles for the home page
+        $recentNews = \App\Models\NewsArticle::published()
+            ->latest()
+            ->limit(3)
+            ->get();
+        
+        // Get upcoming events for the home page
+        $upcomingEvents = \App\Models\Event::published()
+            ->upcoming()
+            ->orderBy('event_date', 'asc')
+            ->orderBy('start_time', 'asc')
+            ->limit(3)
+            ->get();
+        
         return Inertia::render('Home', [
             'page' => $homePage,
+            'recentNews' => $recentNews,
+            'upcomingEvents' => $upcomingEvents,
         ]);
     }
 

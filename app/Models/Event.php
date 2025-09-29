@@ -36,8 +36,8 @@ class Event extends Model
      */
     protected $casts = [
         'event_date' => 'date',
-        'start_time' => 'datetime:H:i',
-        'end_time' => 'datetime:H:i',
+        'start_time' => 'string',
+        'end_time' => 'string',
         'max_participants' => 'integer',
         'registration_required' => 'boolean',
         'is_published' => 'boolean',

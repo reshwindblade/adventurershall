@@ -24,6 +24,7 @@ class RoomBooking extends Model
         'total_cost',
         'status',
         'special_requests',
+        'admin_notes',
     ];
 
     /**

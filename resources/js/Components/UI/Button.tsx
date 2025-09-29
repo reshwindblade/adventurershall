@@ -18,11 +18,11 @@ export default function Button({
     const baseClasses = 'inline-flex items-center justify-center font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 transition duration-150 ease-in-out';
     
     const variantClasses = {
-        primary: 'bg-primary-600 hover:bg-primary-700 focus:ring-primary-500 text-white',
-        secondary: 'bg-gray-600 hover:bg-gray-700 focus:ring-gray-500 text-white',
-        danger: 'bg-red-600 hover:bg-red-700 focus:ring-red-500 text-white',
-        ghost: 'bg-transparent hover:bg-gray-800 focus:ring-gray-500 text-gray-300 hover:text-white border border-gray-600 hover:border-gray-500',
-        outline: 'bg-white hover:bg-gray-50 focus:ring-primary-500 text-gray-700 border border-gray-300 hover:border-gray-400',
+        primary: 'bg-primary-600 hover:bg-primary-700 focus:ring-primary-500 text-white transform hover:scale-105 transition-all duration-200',
+        secondary: 'bg-transparent border-2 border-primary-500 text-primary-500 hover:bg-primary-500 hover:text-white focus:ring-primary-500 transform hover:scale-105 transition-all duration-200',
+        danger: 'bg-red-600 hover:bg-red-700 focus:ring-red-500 text-white transform hover:scale-105 transition-all duration-200',
+        ghost: 'bg-transparent hover:bg-gray-800 focus:ring-gray-500 text-gray-300 hover:text-white border border-gray-600 hover:border-gray-500 transform hover:scale-105 transition-all duration-200',
+        outline: 'bg-white hover:bg-gray-50 focus:ring-primary-500 text-gray-700 border border-gray-300 hover:border-gray-400 transform hover:scale-105 transition-all duration-200',
     };
     
     const sizeClasses = {

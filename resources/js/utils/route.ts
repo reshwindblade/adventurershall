@@ -16,6 +16,11 @@ export function route(name: string, params?: string | number | Record<string, an
         'password.reset': '/reset-password/{token}',
         'auth.google': '/auth/google',
         'auth.facebook': '/auth/facebook',
+        'rooms.index': '/book-room',
+        'rooms.show': '/book-room/{room}',
+        'rooms.availability': '/rooms/{room}/availability',
+        'rooms.store': '/book-room',
+        'bookings.confirmation': '/bookings/{booking}/confirmation',
     };
 
     let url = routes[name];

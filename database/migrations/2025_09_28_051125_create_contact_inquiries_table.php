@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('email');
             $table->text('message');
-            $table->enum('status', ['new', 'in_progress', 'resolved'])->default('new');
+            $table->enum('status', ['pending', 'new', 'in_progress', 'resolved'])->default('pending');
             $table->text('admin_notes')->nullable();
             $table->timestamps();
         });

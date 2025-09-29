@@ -1,99 +1,125 @@
-import { PropsWithChildren, ReactNode } from 'react';
-import { Head, Link, usePage } from '@inertiajs/react';
-import { PageProps } from '@/types';
-import Navigation from './Navigation';
+import React, { ReactNode } from 'react';
+import { Link, usePage } from '@inertiajs/react';
+import { User } from '@/types';
 
-interface AdminLayoutProps extends PropsWithChildren {
+interface AdminLayoutProps {
+    children: ReactNode;
     title?: string;
-    header?: ReactNode;
 }
 
-export default function AdminLayout({ children, title, header }: AdminLayoutProps) {
+interface PageProps {
+    auth: {
+        user: User;
+    };
+}
+
+export default function AdminLayout({ children, title }: AdminLayoutProps) {
     const { auth } = usePage<PageProps>().props;
 
-    // Redirect non-admin users (this should be handled server-side too)
-    if (!auth.user?.is_admin) {
-        return (
-            <div className="min-h-screen bg-gray-900 flex items-center justify-center">
-                <div className="text-center">
-                    <h1 className="text-2xl font-bold text-white mb-4">Access Denied</h1>
-                    <p className="text-gray-300 mb-4">You don't have permission to access this area.</p>
-                    <Link href="/" className="text-primary-400 hover:text-primary-300">
-                        Return to Home
-                    </Link>
-                </div>
-            </div>
-        );
-    }
-
     return (
-        <>
-            <Head title={title ? `Admin - ${title}` : 'Admin Panel'} />
-            <div className="min-h-screen bg-gray-900">
-                <Navigation />
-                
-                {/* Admin Navigation */}
-                <nav className="bg-dark-800 border-b border-gray-700">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div className="flex justify-between h-16">
-                            <div className="flex">
-                                <div className="flex space-x-8">
+        <div className="min-h-screen bg-gray-100">
+            {/* Admin Navigation */}
+            <nav className="bg-gray-900 shadow-sm">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="flex justify-between h-16">
+                        <div className="flex">
+                            {/* Logo */}
+                            <div className="flex-shrink-0 flex items-center">
+                                <Link href="/" className="text-white font-bold text-xl">
+                                    Adventurers' Hall Admin
+                                </Link>
+                            </div>
+
+                            {/* Admin Navigation Links */}
+                            <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                                <Link
+                                    href="/admin/dashboard"
+                                    className="border-transparent text-gray-300 hover:text-white hover:border-gray-300 whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm transition duration-150 ease-in-out"
+                                >
+                                    Dashboard
+                                </Link>
+                                <Link
+                                    href="/admin/pages"
+                                    className="border-transparent text-gray-300 hover:text-white hover:border-gray-300 whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm transition duration-150 ease-in-out"
+                                >
+                                    Pages
+                                </Link>
+                                <Link
+                                    href="/admin/news"
+                                    className="border-transparent text-gray-300 hover:text-white hover:border-gray-300 whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm transition duration-150 ease-in-out"
+                                >
+                                    News
+                                </Link>
+                                <Link
+                                    href="/admin/events"
+                                    className="border-transparent text-gray-300 hover:text-white hover:border-gray-300 whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm transition duration-150 ease-in-out"
+                                >
+                                    Events
+                                </Link>
+                                <Link
+                                    href={route('admin.room-bookings.index')}
+                                    className="border-transparent text-gray-300 hover:text-white hover:border-gray-300 whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm transition duration-150 ease-in-out"
+                                >
+                                    Room Bookings
+                                </Link>
+                                <Link
+                                    href={route('admin.session-bookings.index')}
+                                    className="border-transparent text-gray-300 hover:text-white hover:border-gray-300 whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm transition duration-150 ease-in-out"
+                                >
+                                    Session Bookings
+                                </Link>
+                                <Link
+                                    href={route('admin.contact-inquiries.index')}
+                                    className="border-transparent text-gray-300 hover:text-white hover:border-gray-300 whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm transition duration-150 ease-in-out"
+                                >
+                                    Contact Inquiries
+                                </Link>
+                            </div>
+                        </div>
+
+                        {/* User Menu */}
+                        <div className="hidden sm:ml-6 sm:flex sm:items-center">
+                            <div className="ml-3 relative">
+                                <div className="flex items-center space-x-4">
+                                    <span className="text-gray-300 text-sm">
+                                        Welcome, {auth.user.name}
+                                    </span>
                                     <Link
-                                        href="/admin"
-                                        className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-300 hover:text-white border-b-2 border-transparent hover:border-primary-500"
+                                        href="/"
+                                        className="text-gray-300 hover:text-white text-sm"
                                     >
-                                        Dashboard
+                                        View Site
                                     </Link>
                                     <Link
-                                        href="/admin/pages"
-                                        className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-300 hover:text-white border-b-2 border-transparent hover:border-primary-500"
+                                        href="/logout"
+                                        method="post"
+                                        as="button"
+                                        className="text-gray-300 hover:text-white text-sm"
                                     >
-                                        Pages
-                                    </Link>
-                                    <Link
-                                        href="/admin/news"
-                                        className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-300 hover:text-white border-b-2 border-transparent hover:border-primary-500"
-                                    >
-                                        News
-                                    </Link>
-                                    <Link
-                                        href="/admin/events"
-                                        className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-300 hover:text-white border-b-2 border-transparent hover:border-primary-500"
-                                    >
-                                        Events
-                                    </Link>
-                                    <Link
-                                        href="/admin/bookings"
-                                        className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-300 hover:text-white border-b-2 border-transparent hover:border-primary-500"
-                                    >
-                                        Bookings
-                                    </Link>
-                                    <Link
-                                        href="/admin/inquiries"
-                                        className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-300 hover:text-white border-b-2 border-transparent hover:border-primary-500"
-                                    >
-                                        Inquiries
+                                        Logout
                                     </Link>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </nav>
+                </div>
+            </nav>
 
-                {header && (
-                    <header className="bg-dark-800 shadow">
-                        <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                            {header}
-                        </div>
-                    </header>
-                )}
-
-                <main className="py-12">
-                    <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                        {children}
+            {/* Page Header */}
+            {title && (
+                <header className="bg-white shadow">
+                    <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                        <h1 className="text-3xl font-bold text-gray-900">{title}</h1>
                     </div>
-                </main>
-            </div>
-        </>
+                </header>
+            )}
+
+            {/* Main Content */}
+            <main className="py-10">
+                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                    {children}
+                </div>
+            </main>
+        </div>
     );
 }

@@ -76,7 +76,7 @@ export default function Navigation() {
                                     </span>
                                     {auth.user.is_admin && (
                                         <Link
-                                            href="/admin"
+                                            href="/admin/dashboard"
                                             className="text-primary-400 hover:text-primary-300 text-sm font-medium"
                                         >
                                             Admin Panel
@@ -196,7 +196,7 @@ export default function Navigation() {
                             <div className="mt-3 space-y-1">
                                 {auth.user.is_admin && (
                                     <Link
-                                        href="/admin"
+                                        href="/admin/dashboard"
                                         className="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-primary-400 hover:text-primary-300 hover:bg-gray-800 hover:border-primary-500 focus:outline-none focus:text-primary-300 focus:bg-gray-800 focus:border-primary-500 transition duration-150 ease-in-out"
                                     >
                                         Admin Panel

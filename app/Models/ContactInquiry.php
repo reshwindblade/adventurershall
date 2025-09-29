@@ -38,10 +38,19 @@ class ContactInquiry extends Model
     public static function getStatusOptions(): array
     {
         return [
+            'pending' => 'Pending',
             'new' => 'New',
             'in_progress' => 'In Progress',
             'resolved' => 'Resolved',
         ];
+    }
+
+    /**
+     * Scope a query to only include pending inquiries.
+     */
+    public function scopePending($query)
+    {
+        return $query->where('status', 'pending');
     }
 
     /**

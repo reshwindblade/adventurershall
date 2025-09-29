@@ -24,8 +24,10 @@
         "@inertiajs/react": "^2.2.0",
         "@types/react": "^19.1.14",
         "@types/react-dom": "^19.1.9",
+        "quill": "^2.0.3",
         "react": "^19.1.1",
         "react-dom": "^19.1.1",
+        "react-quill": "^2.0.0",
         "typescript": "^5.9.2"
     }
 }

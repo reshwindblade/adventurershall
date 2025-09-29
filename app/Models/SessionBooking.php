@@ -24,6 +24,7 @@ class SessionBooking extends Model
         'experience_level',
         'special_requests',
         'status',
+        'admin_notes',
     ];
 
     /**
