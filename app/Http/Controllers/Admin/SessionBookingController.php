@@ -14,7 +14,8 @@ class SessionBookingController extends Controller
      */
     public function index(Request $request)
     {
-        $query = SessionBooking::with(['user', 'gamingSession']);
+        $query = SessionBooking::with(['user:id,name,email', 'gamingSession:id,name,system'])
+            ->select(['id', 'user_id', 'gaming_session_id', 'booking_date', 'start_time', 'participants', 'experience_level', 'status', 'created_at']);
 
         // Apply filters
         if ($request->filled('status')) {
@@ -50,8 +51,11 @@ class SessionBookingController extends Controller
                           ->paginate(15)
                           ->withQueryString();
 
-        // Get filter options
-        $gamingSessions = \App\Models\GamingSession::select('id', 'name', 'system')->get();
+        // Get filter options with caching
+        $gamingSessions = cache()->remember('gaming_sessions_filter_options', 3600, function () {
+            return \App\Models\GamingSession::select('id', 'name', 'system')->get();
+        });
+        
         $statusOptions = [
             'pending' => 'Pending',
             'confirmed' => 'Confirmed',

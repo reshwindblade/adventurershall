@@ -14,7 +14,8 @@ class RoomBookingController extends Controller
      */
     public function index(Request $request)
     {
-        $query = RoomBooking::with(['user', 'room']);
+        $query = RoomBooking::with(['user:id,name,email', 'room:id,name,slug'])
+            ->select(['id', 'user_id', 'room_id', 'booking_date', 'start_time', 'end_time', 'status', 'total_cost', 'created_at']);
 
         // Apply filters
         if ($request->filled('status')) {
@@ -46,8 +47,11 @@ class RoomBookingController extends Controller
                           ->paginate(15)
                           ->withQueryString();
 
-        // Get filter options
-        $rooms = \App\Models\Room::select('id', 'name')->get();
+        // Get filter options with caching
+        $rooms = cache()->remember('rooms_filter_options', 3600, function () {
+            return \App\Models\Room::select('id', 'name')->active()->get();
+        });
+        
         $statusOptions = [
             'pending' => 'Pending',
             'confirmed' => 'Confirmed',

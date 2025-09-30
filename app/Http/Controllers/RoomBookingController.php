@@ -23,7 +23,11 @@ class RoomBookingController extends Controller
      */
     public function index(): Response
     {
-        $rooms = Room::active()->get();
+        $rooms = cache()->remember('active_rooms', 3600, function () {
+            return Room::active()
+                ->select(['id', 'name', 'slug', 'description', 'capacity', 'hourly_rate', 'image_path'])
+                ->get();
+        });
         
         return Inertia::render('BookRoom', [
             'rooms' => $rooms,
@@ -35,8 +39,14 @@ class RoomBookingController extends Controller
      */
     public function show(Room $room): Response
     {
+        $rooms = cache()->remember('active_rooms', 3600, function () {
+            return Room::active()
+                ->select(['id', 'name', 'slug', 'description', 'capacity', 'hourly_rate', 'image_path'])
+                ->get();
+        });
+
         return Inertia::render('BookRoom', [
-            'rooms' => Room::active()->get(),
+            'rooms' => $rooms,
             'selectedRoom' => $room,
         ]);
     }

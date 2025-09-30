@@ -19,6 +19,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // Register model observers for cache invalidation
+        \App\Models\Room::observe(\App\Observers\RoomObserver::class);
+        \App\Models\Page::observe(\App\Observers\PageObserver::class);
+        \App\Models\NewsArticle::observe(\App\Observers\NewsArticleObserver::class);
+        \App\Models\Event::observe(\App\Observers\EventObserver::class);
+        \App\Models\GamingSession::observe(\App\Observers\GamingSessionObserver::class);
     }
 }

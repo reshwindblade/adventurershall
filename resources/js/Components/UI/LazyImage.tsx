@@ -2,20 +2,27 @@ import { useState, useRef, useEffect, ImgHTMLAttributes } from 'react';
 
 interface LazyImageProps extends ImgHTMLAttributes<HTMLImageElement> {
     src: string;
+    webpSrc?: string;
     alt: string;
     placeholder?: string;
     className?: string;
+    sizes?: string;
+    srcSet?: string;
 }
 
 export default function LazyImage({ 
     src, 
+    webpSrc,
     alt, 
     placeholder = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMzc0MTUxIi8+PC9zdmc+',
     className = '',
+    sizes,
+    srcSet,
     ...props 
 }: LazyImageProps) {
     const [isLoaded, setIsLoaded] = useState(false);
     const [isInView, setIsInView] = useState(false);
+    const [hasError, setHasError] = useState(false);
     const imgRef = useRef<HTMLImageElement>(null);
 
     useEffect(() => {
@@ -26,7 +33,7 @@ export default function LazyImage({
                     observer.disconnect();
                 }
             },
-            { threshold: 0.1 }
+            { threshold: 0.1, rootMargin: '50px' }
         );
 
         if (imgRef.current) {
@@ -40,19 +47,73 @@ export default function LazyImage({
         setIsLoaded(true);
     };
 
+    const handleError = () => {
+        setHasError(true);
+    };
+
+    // Check if browser supports WebP
+    const supportsWebP = () => {
+        try {
+            const canvas = document.createElement('canvas');
+            canvas.width = 1;
+            canvas.height = 1;
+            return canvas.toDataURL('image/webp').indexOf('data:image/webp') === 0;
+        } catch {
+            return false;
+        }
+    };
+
+    const getOptimalSrc = () => {
+        if (hasError) return placeholder;
+        if (!isInView) return placeholder;
+        
+        // Use WebP if supported and available
+        if (webpSrc && supportsWebP()) {
+            return webpSrc;
+        }
+        
+        return src;
+    };
+
     return (
         <div className="relative overflow-hidden">
-            <img
-                ref={imgRef}
-                src={isInView ? src : placeholder}
-                alt={alt}
-                onLoad={handleLoad}
-                className={`lazy-image transition-opacity duration-300 ${
-                    isLoaded ? 'loaded opacity-100' : 'opacity-0'
-                } ${className}`}
-                {...props}
-            />
-            {!isLoaded && isInView && (
+            {webpSrc && isInView ? (
+                <picture>
+                    <source srcSet={webpSrc} type="image/webp" />
+                    <img
+                        ref={imgRef}
+                        src={getOptimalSrc()}
+                        alt={alt}
+                        onLoad={handleLoad}
+                        onError={handleError}
+                        className={`lazy-image transition-opacity duration-300 ${
+                            isLoaded ? 'loaded opacity-100' : 'opacity-0'
+                        } ${className}`}
+                        loading="lazy"
+                        sizes={sizes}
+                        srcSet={srcSet}
+                        decoding="async"
+                        {...props}
+                    />
+                </picture>
+            ) : (
+                <img
+                    ref={imgRef}
+                    src={getOptimalSrc()}
+                    alt={alt}
+                    onLoad={handleLoad}
+                    onError={handleError}
+                    className={`lazy-image transition-opacity duration-300 ${
+                        isLoaded ? 'loaded opacity-100' : 'opacity-0'
+                    } ${className}`}
+                    loading="lazy"
+                    sizes={sizes}
+                    srcSet={srcSet}
+                    decoding="async"
+                    {...props}
+                />
+            )}
+            {!isLoaded && isInView && !hasError && (
                 <div className="absolute inset-0 bg-gray-700 animate-pulse flex items-center justify-center">
                     <svg className="w-8 h-8 text-gray-500 animate-spin" fill="none" viewBox="0 0 24 24">
                         <circle
