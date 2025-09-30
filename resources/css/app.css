@@ -26,8 +26,8 @@
     
     body {
         font-family: 'Inter', sans-serif;
-        background-color: theme('colors.gray.900');
-        color: theme('colors.white');
+        background-color: #111827;
+        color: #ffffff;
     }
 }
 

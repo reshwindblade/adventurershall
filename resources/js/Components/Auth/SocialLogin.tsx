@@ -15,22 +15,21 @@ export const SocialLogin: React.FC<SocialLoginProps> = ({ className = '' }) => {
     };
 
     return (
-        <div className={`space-y-3 ${className}`}>
+        <div className={`space-y-4 ${className}`}>
             <div className="relative">
                 <div className="absolute inset-0 flex items-center">
-                    <div className="w-full border-t border-gray-300" />
+                    <div className="w-full border-t border-gray-600" />
                 </div>
                 <div className="relative flex justify-center text-sm">
-                    <span className="px-2 bg-white text-gray-500">Or continue with</span>
+                    <span className="px-2 bg-dark-800 text-gray-400">Or continue with</span>
                 </div>
             </div>
 
             <div className="grid grid-cols-2 gap-3">
-                <Button
+                <button
                     type="button"
-                    variant="outline"
                     onClick={handleGoogleLogin}
-                    className="w-full flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+                    className="w-full flex items-center justify-center px-4 py-2 border border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-300 bg-gray-700 hover:bg-gray-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 focus:ring-offset-gray-900 transition-all duration-200 interactive-hover"
                 >
                     <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">
                         <path
@@ -51,19 +50,18 @@ export const SocialLogin: React.FC<SocialLoginProps> = ({ className = '' }) => {
                         />
                     </svg>
                     Google
-                </Button>
+                </button>
 
-                <Button
+                <button
                     type="button"
-                    variant="outline"
                     onClick={handleFacebookLogin}
-                    className="w-full flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+                    className="w-full flex items-center justify-center px-4 py-2 border border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-300 bg-gray-700 hover:bg-gray-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 focus:ring-offset-gray-900 transition-all duration-200 interactive-hover"
                 >
                     <svg className="w-5 h-5 mr-2" fill="#1877F2" viewBox="0 0 24 24">
                         <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
                     </svg>
                     Facebook
-                </Button>
+                </button>
             </div>
         </div>
     );

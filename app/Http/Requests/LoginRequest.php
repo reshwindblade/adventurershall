@@ -2,10 +2,12 @@
 
 namespace App\Http\Requests;
 
+use App\Http\Requests\Concerns\HasEnhancedValidation;
 use Illuminate\Foundation\Http\FormRequest;
 
 class LoginRequest extends FormRequest
 {
+    use HasEnhancedValidation;
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -34,9 +36,20 @@ class LoginRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'email.required' => 'Email address is required.',
-            'email.email' => 'Please enter a valid email address.',
-            'password.required' => 'Password is required.',
+            'email.required' => 'Email address is required to sign in.',
+            'email.email' => 'Please enter a valid email address (e.g., user@example.com).',
+            'password.required' => 'Password is required to sign in.',
+        ];
+    }
+
+    /**
+     * Get custom attributes for validator errors.
+     */
+    public function attributes(): array
+    {
+        return [
+            'email' => 'email address',
+            'password' => 'password',
         ];
     }
 }

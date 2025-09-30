@@ -138,7 +138,7 @@ export default function AvailabilityCalendar({
                 >
                     ←
                 </Button>
-                <h3 className="text-lg font-semibold text-gray-900">
+                <h3 className="text-lg font-display font-semibold text-white">
                     {currentMonth.toLocaleDateString('en-US', { 
                         month: 'long', 
                         year: 'numeric' 
@@ -157,7 +157,7 @@ export default function AvailabilityCalendar({
             <div className="grid grid-cols-7 gap-1">
                 {/* Day headers */}
                 {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
-                    <div key={day} className="p-2 text-center text-sm font-medium text-gray-500">
+                    <div key={day} className="p-2 text-center text-sm font-medium text-gray-400">
                         {day}
                     </div>
                 ))}
@@ -178,12 +178,12 @@ export default function AvailabilityCalendar({
                             className={`
                                 p-2 text-sm rounded-md transition-colors
                                 ${isPast 
-                                    ? 'text-gray-300 cursor-not-allowed' 
-                                    : 'hover:bg-pink-50 cursor-pointer'
+                                    ? 'text-gray-500 cursor-not-allowed' 
+                                    : 'hover:bg-primary-900 cursor-pointer'
                                 }
-                                ${!isCurrent ? 'text-gray-400' : 'text-gray-900'}
-                                ${isSelected ? 'bg-pink-500 text-white hover:bg-pink-600' : ''}
-                                ${isTodayDate && !isSelected ? 'bg-gray-100 font-semibold' : ''}
+                                ${!isCurrent ? 'text-gray-500' : 'text-gray-300'}
+                                ${isSelected ? 'bg-primary-500 text-white hover:bg-primary-600' : ''}
+                                ${isTodayDate && !isSelected ? 'bg-gray-700 font-semibold text-white' : ''}
                             `}
                         >
                             {date.getDate()}
@@ -195,13 +195,13 @@ export default function AvailabilityCalendar({
             {/* Time Slots */}
             {selectedDate && (
                 <div className="border-t pt-6">
-                    <h4 className="text-md font-medium text-gray-900 mb-4">
+                    <h4 className="text-md font-medium text-white mb-4">
                         Available Times for {new Date(selectedDate).toLocaleDateString()}
                     </h4>
                     
                     {loadingAvailability ? (
                         <div className="text-center py-4">
-                            <div className="text-gray-500">Loading availability...</div>
+                            <div className="text-gray-400">Loading availability...</div>
                         </div>
                     ) : availability.length > 0 ? (
                         <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
@@ -218,9 +218,9 @@ export default function AvailabilityCalendar({
                                             p-3 text-sm rounded-md border transition-colors
                                             ${timeSlot.available
                                                 ? isSelected
-                                                    ? 'bg-pink-500 text-white border-pink-500'
-                                                    : 'bg-white text-gray-900 border-gray-300 hover:bg-pink-50 hover:border-pink-300'
-                                                : 'bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed'
+                                                    ? 'bg-primary-500 text-white border-primary-500'
+                                                    : 'bg-gray-700 text-gray-300 border-gray-600 hover:bg-primary-900 hover:border-primary-700 hover:text-white'
+                                                : 'bg-gray-800 text-gray-500 border-gray-700 cursor-not-allowed'
                                             }
                                         `}
                                     >
@@ -240,7 +240,7 @@ export default function AvailabilityCalendar({
                             })}
                         </div>
                     ) : (
-                        <div className="text-center py-4 text-gray-500">
+                        <div className="text-center py-4 text-gray-400">
                             No availability data found for this date.
                         </div>
                     )}

@@ -13,9 +13,7 @@ export default function Login({ errors, status }: LoginPageProps) {
         <GuestLayout>
             <Head title="Sign In" />
             
-            <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-                <LoginForm errors={errors} status={status} />
-            </div>
+            <LoginForm errors={errors} status={status} />
         </GuestLayout>
     );
 }
