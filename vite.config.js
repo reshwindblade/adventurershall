@@ -8,8 +8,14 @@ export default defineConfig({
             input: 'resources/js/app.tsx',
             refresh: true,
         }),
-        react(),
+        react({
+            include: '**/*.{tsx,jsx}',
+        }),
     ],
+    server: {
+        host: 'localhost',
+        cors: true,
+    },
     resolve: {
         alias: {
             '@': '/resources/js',
@@ -23,7 +29,6 @@ export default defineConfig({
                     'react-vendor': ['react', 'react-dom'],
                     'inertia-vendor': ['@inertiajs/react'],
                     'ui-vendor': ['@headlessui/react'],
-                    'editor-vendor': ['quill', 'react-quill'],
                 }
             }
         },
@@ -36,7 +41,9 @@ export default defineConfig({
             'react',
             'react-dom',
             '@inertiajs/react',
-            '@headlessui/react'
+            '@headlessui/react',
+            'react-quill',
+            'quill'
         ],
     },
 });
